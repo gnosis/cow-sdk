@@ -1,6 +1,4 @@
-import * as appDataSchema from '../schemas/appData.schema.json'
 import Ajv from 'ajv'
-
 
 let validate: Ajv.ValidateFunction | undefined
 let ajv: Ajv.Ajv
@@ -10,12 +8,13 @@ interface ValidationResult {
   errors?: Ajv.ErrorObject[]
 }
 
-function getValidator(): { ajv: Ajv.Ajv, validate: Ajv.ValidateFunction } {
+async function getValidator(): Promise<{ ajv: Ajv.Ajv, validate: Ajv.ValidateFunction }> {  
   if (!ajv) {
     ajv = new Ajv()  
   }
 
   if (!validate) {
+    const appDataSchema = await import('../schemas/appData.schema.json');
     validate = ajv.compile(appDataSchema)
   }
   
@@ -24,7 +23,7 @@ function getValidator(): { ajv: Ajv.Ajv, validate: Ajv.ValidateFunction } {
 }
 
 export async function validateAppDataDocument(appDataDocument: any): Promise<ValidationResult>{
-  const { ajv, validate } = getValidator()
+  const { ajv, validate } = await getValidator()
   const result = !!(await validate(appDataDocument))
 
 
