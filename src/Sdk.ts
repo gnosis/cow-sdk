@@ -1,9 +1,7 @@
-import { version } from '../package.json'
+import { version as SDK_VERSION } from '../package.json'
 
 export class Sdk {
-  version() {
-    return version
-  }
+  static version = SDK_VERSION
 }
 
 export default Sdk
