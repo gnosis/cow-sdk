@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/jest": "^27.0.3",
+    "jest": "^27.3.1",
     "microbundle": "^0.14.2"
   },
   "source": "src/index.ts",
@@ -15,7 +18,8 @@
   "unpkg": "./dist/cow-sdk.umd.js",
   "scripts": {
     "build": "microbundle",
-    "dev": "microbundle watch"
+    "dev": "microbundle watch",
+    "test": "jest"
   },
   "types": "dist/index.d.ts"
 }

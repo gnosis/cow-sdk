@@ -1,9 +1,8 @@
 import * as appDataSchema from '../schemas/appData.schema.json'
-import * as Ajv from 'ajv'
-
+import Ajv from 'ajv'
+const ajv = new Ajv()
 
 // let validateDocument 
-const ajv = new Ajv()
 const validate = ajv.compile(appDataSchema)
 
 interface ValidationResult {
