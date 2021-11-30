@@ -4,8 +4,6 @@ const VALID_RESULT = {
   result: true,
 }
 
-// TODO: Create more test cases
-
 test('Valid minimal document', async () => {
   const validation = await validateAppDataDocument({
     "version": "0.1.0",
@@ -25,7 +23,6 @@ test('Valid minimal document + appCode', async () => {
 
 
 test('Valid minimal document + appCode + referrer', async () => {
-  // GIVEN: A valid document
   const validation = await validateAppDataDocument({
     "version": "0.1.0",
     "appCode": "MyApp",
@@ -40,7 +37,6 @@ test('Valid minimal document + appCode + referrer', async () => {
 });
 
 test('Invalid: No version', async () => {
-  // GIVEN: A valid document
   const validation = await validateAppDataDocument({
     "appCode": "MyApp",
     "metadata": {}
@@ -50,7 +46,6 @@ test('Invalid: No version', async () => {
 
 
 test('Invalid: No metadata', async () => {
-  // GIVEN: A valid document
   const validation = await validateAppDataDocument({
     "version": "0.1.0",
     "appCode": "MyApp",
