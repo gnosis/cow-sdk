@@ -18,7 +18,7 @@
   "unpkg": "./dist/cow-sdk.umd.js",
   "scripts": {
     "build": "microbundle",
-    "dev": "microbundle watch",
+    "start": "microbundle watch",
     "test": "jest"
   },
   "types": "dist/index.d.ts"

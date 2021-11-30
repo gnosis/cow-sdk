@@ -19,7 +19,7 @@ yarn build
 ### Run
 
 ```bash
-yarn dev
+yarn start
 ```
 
 ### Unit testing
