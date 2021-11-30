@@ -29,6 +29,6 @@ export async function validateAppDataDocument(appDataDocument: any): Promise<Val
 
   return {
     result,
-    errors: result ? ajv.errors ?? undefined : undefined
+    errors: ajv.errors ?? undefined
   }
 }
