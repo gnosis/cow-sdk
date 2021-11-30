@@ -1,1 +1,1 @@
-export * from './Sdk'
+export * from './CowSdk'
