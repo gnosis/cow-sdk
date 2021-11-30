@@ -36,6 +36,20 @@ test('Valid minimal document + appCode + referrer', async () => {
   expect(validation).toEqual(VALID_RESULT);
 });
 
+test('Invalid: Bad referrer', async () => {
+  const validation = await validateAppDataDocument({
+    "version": "0.1.0",
+    "appCode": "MyApp",
+    "metadata": {
+      "referrer": {
+        "version": "0.1.0",
+        "address": "this is not an ethereum address"
+      }
+    }
+  })
+  expect(validation.result).toBeFalsy();
+});
+
 test('Invalid: No version', async () => {
   const validation = await validateAppDataDocument({
     "appCode": "MyApp",
