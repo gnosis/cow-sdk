@@ -24,7 +24,7 @@ fail_if_unset AWS_SECRET_ACCESS_KEY
 fail_if_unset AWS_REGION
 
 git_username="GitHub Actions"
-git_useremail="GitHub-Actions@GPv2-contracts"
+git_useremail="GitHub-Actions@cow-sdk"
 
 package_name="$(jq --raw-output .name ./package.json)"
 version="$(jq --raw-output .version ./package.json)"
@@ -46,7 +46,7 @@ yarn pack --filename package.tgz
 aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
 aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
 aws configure set region "$AWS_REGION"
-if ! aws s3 cp package.tgz "s3://$BUCKET_NAME/cow-token/cow-token-$version.tgz"; then
+if ! aws s3 cp package.tgz "s3://$BUCKET_NAME/cow-sdk/cow-sdk-$version.tgz"; then
   echo "Failed upload to aws"
   exit 1
 fi
