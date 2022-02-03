@@ -21,7 +21,6 @@ import {
   OrderCancellationParams,
   OrderID,
   OrderMetaData,
-  PriceStrategy,
   ProfileData,
   TradeMetaData,
 } from './types'
@@ -52,16 +51,6 @@ function getProfileUrl(isDev: boolean): Partial<Record<ChainId, string>> {
 
   return {
     [ChainId.MAINNET]: 'https://api.cow.fi/affiliate/api',
-  }
-}
-
-const STRATEGY_URL_BASE = 'https://raw.githubusercontent.com/gnosis/cowswap/configuration/config/strategies'
-
-function getPriceStrategyUrl(): Record<ChainId, string> {
-  return {
-    [ChainId.MAINNET]: STRATEGY_URL_BASE + '/strategy-1.json',
-    [ChainId.RINKEBY]: STRATEGY_URL_BASE + '/strategy-4.json',
-    [ChainId.GNOSIS_CHAIN]: STRATEGY_URL_BASE + '/strategy-100.json',
   }
 }
 
@@ -120,24 +109,6 @@ export class CowApi<T extends ChainId> {
 
   get PROFILE_API_BASE_URL(): Partial<Record<ChainId, string>> {
     return getProfileUrl(this.isDevEnvironment)
-  }
-
-  get STRATEGY_API_URL() {
-    return getPriceStrategyUrl()
-  }
-
-  async getPriceStrategy(): Promise<PriceStrategy> {
-    log.debug(`[api:${this.API_NAME}] Get GP price strategy for`, this.chainId)
-
-    const response = await fetch(this.getPriceStrategyApiBaseUrl())
-
-    if (!response.ok) {
-      const errorResponse = await response.json()
-      log.error(errorResponse)
-      throw new CowError(errorResponse?.description)
-    } else {
-      return response.json()
-    }
   }
 
   async getProfileData(address: string): Promise<ProfileData | null> {
@@ -335,20 +306,6 @@ export class CowApi<T extends ChainId> {
     } else {
       return baseUrl + '/v1'
     }
-  }
-
-  private getPriceStrategyApiBaseUrl(): string {
-    const baseUrl = this.STRATEGY_API_URL[this.chainId]
-
-    if (!baseUrl) {
-      new Error(
-        `Unsupported Network. The ${this.API_NAME} strategy API is not deployed in the Network ` +
-          this.chainId +
-          '. Defaulting to using Mainnet strategy.'
-      )
-    }
-
-    return baseUrl
   }
 
   private fetch(url: string, method: 'GET' | 'POST' | 'DELETE', data?: any): Promise<Response> {

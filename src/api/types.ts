@@ -80,10 +80,3 @@ export type ProfileData = {
   referralVolumeUsd: number
   lastUpdated: string
 }
-
-export type GpPriceStrategy = 'COWSWAP' | 'LEGACY'
-
-export type PriceStrategy = {
-  primary: GpPriceStrategy
-  secondary: GpPriceStrategy
-}

@@ -1,10 +1,9 @@
 import { GetQuoteResponse } from '@gnosis.pm/gp-v2-contracts'
-import { GpPriceStrategy, OrderMetaData } from '../api/types'
+import { OrderMetaData } from '../api/types'
 import { SupportedChainId as ChainId } from '../constants/chains'
 
 export interface QuoteParams {
   quoteParams: FeeQuoteParams
-  strategy: GpPriceStrategy
   fetchFee: boolean
   previousFee?: FeeInformation
   isPriceRefresh: boolean
