@@ -106,7 +106,7 @@ function _getDomain(chainId: ChainId): TypedDataDomain {
     throw new Error('Unsupported network. Settlement contract is not deployed')
   }
 
-  return domainGp(chainId, settlementContract) // TODO: Fix types in NPM package
+  return domainGp(chainId, settlementContract)
 }
 
 async function _signOrder(params: SignOrderParams): Promise<Signature> {
