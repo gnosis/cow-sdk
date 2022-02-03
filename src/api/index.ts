@@ -25,6 +25,7 @@ import {
   TradeMetaData,
 } from './types'
 import { CowError } from '../utils/common'
+import { Context } from '../utils/context'
 
 function getGnosisProtocolUrl(isDev: boolean): Partial<Record<ChainId, string>> {
   if (isDev) {
@@ -88,27 +89,25 @@ async function _handleQuoteResponse<T = any, P extends QuoteQuery = QuoteQuery>(
 
 export class CowApi<T extends ChainId> {
   chainId: T
-  appDataHash: string
-  isDevEnvironment: boolean
+  context: Context
 
   API_NAME = 'CoW Protocol'
 
-  constructor(chainId: T, appDataHash: string, isDevEnvironment: boolean = false) {
+  constructor(chainId: T, context: Context) {
     this.chainId = chainId
-    this.appDataHash = appDataHash
-    this.isDevEnvironment = isDevEnvironment
+    this.context = context
   }
 
   get DEFAULT_HEADERS() {
-    return { 'Content-Type': 'application/json', 'X-AppId': this.appDataHash }
+    return { 'Content-Type': 'application/json', 'X-AppId': this.context.appDataHash }
   }
 
   get API_BASE_URL() {
-    return getGnosisProtocolUrl(this.isDevEnvironment)
+    return getGnosisProtocolUrl(this.context.isDevEnvironment)
   }
 
   get PROFILE_API_BASE_URL(): Partial<Record<ChainId, string>> {
-    return getProfileUrl(this.isDevEnvironment)
+    return getProfileUrl(this.context.isDevEnvironment)
   }
 
   async getProfileData(address: string): Promise<ProfileData | null> {
@@ -267,7 +266,7 @@ export class CowApi<T extends ChainId> {
       buyToken: toErc20Address(buyToken, chainId),
       from: fallbackAddress,
       receiver: receiver || fallbackAddress,
-      appData: this.appDataHash,
+      appData: this.context.appDataHash,
       validTo,
       partiallyFillable: false,
     }

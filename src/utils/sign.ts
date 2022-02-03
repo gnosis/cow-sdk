@@ -152,7 +152,7 @@ async function _signPayload(
     }
   } catch (e) {
     log.error('Wallet not supported:', e)
-    throw new Error('Wallet not supported')
+    throw new CowError('Wallet not supported')
   }
 
   try {
