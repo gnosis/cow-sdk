@@ -4,7 +4,7 @@ import { CowApi } from './api'
 import { DEFAULT_APP_DATA_HASH } from './constants'
 import { SupportedChainId as ChainId } from './constants/chains'
 import { validateAppDataDocument } from './utils/appData'
-import { SdkError } from './utils/common'
+import { CowError } from './utils/common'
 import { signOrder, signOrderCancellation, UnsignedOrder } from './utils/sign'
 
 export interface SdkContext {
@@ -40,16 +40,17 @@ export class CowSdk<T extends ChainId> {
     const signer = this.provider?.getSigner()
 
     if (!signer) {
-      throw new SdkError('To sign an order a provider must be passed to the constructor')
+      throw new CowError('To sign an order a provider must be passed to the constructor')
     }
 
     return signOrder(order, this.chainId, signer)
   }
+
   signOrderCancellation(orderId: string) {
     const signer = this.provider?.getSigner()
 
     if (!signer) {
-      throw new SdkError('To sign a cancellation order a provider must be passed to the constructor')
+      throw new CowError('To sign a cancellation order a provider must be passed to the constructor')
     }
     return signOrderCancellation(orderId, this.chainId, signer)
   }

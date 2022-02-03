@@ -1,5 +1,5 @@
 import log from 'loglevel'
-import { SdkError } from '../../utils/common'
+import { CowError } from '../../utils/common'
 import { ApiErrorCodes, ApiErrorObject } from './OperatorError'
 
 export interface GpQuoteErrorObject {
@@ -57,7 +57,7 @@ export function mapOperatorErrorToQuoteError(error?: ApiErrorObject): GpQuoteErr
   }
 }
 
-export default class GpQuoteError extends SdkError {
+export default class GpQuoteError extends CowError {
   name = 'QuoteErrorObject'
   description: string
   // any data attached

@@ -15,7 +15,7 @@ import log from 'loglevel'
 import { SupportedChainId as ChainId } from '../constants/chains'
 import { GP_SETTLEMENT_CONTRACT_ADDRESS } from '../constants'
 import { TypedDataDomain, Signer } from '@ethersproject/abstract-signer'
-import { SdkError } from './common'
+import { CowError } from './common'
 
 // For error codes, see:
 // - https://eth.wiki/json-rpc/json-rpc-error-codes-improvement-proposal
@@ -76,7 +76,7 @@ const mapSigningSchema: Map<SigningScheme, SchemaInfo> = new Map([
 function _getSigningSchemeInfo(ecdaSigningScheme: SigningScheme): SchemaInfo {
   const value = mapSigningSchema.get(ecdaSigningScheme)
   if (value === undefined) {
-    throw new SdkError('Unknown schema ' + ecdaSigningScheme)
+    throw new CowError('Unknown schema ' + ecdaSigningScheme)
   }
 
   return value
@@ -105,7 +105,7 @@ function _getDomain(chainId: ChainId): TypedDataDomain {
   const settlementContract = GP_SETTLEMENT_CONTRACT_ADDRESS[chainId]
 
   if (!settlementContract) {
-    throw new SdkError('Unsupported network. Settlement contract is not deployed')
+    throw new CowError('Unsupported network. Settlement contract is not deployed')
   }
 
   return domainGp(chainId, settlementContract)

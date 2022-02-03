@@ -1,6 +1,6 @@
 import { Token, NativeCurrency, Currency, WETH9 } from '@uniswap/sdk-core'
 import { SupportedChainId } from '../constants/chains'
-import { SdkError } from '../utils/common'
+import { CowError } from '../utils/common'
 import { WXDAI, XDAI_NAME, XDAI_SYMBOL } from './xdai'
 
 export const WETH9_EXTENDED: { [chainId: number]: Token } = {
@@ -15,7 +15,7 @@ export class GpEther extends NativeCurrency {
 
   public get wrapped(): Token {
     if (this.chainId in WETH9_EXTENDED) return WETH9_EXTENDED[this.chainId]
-    throw new SdkError('Unsupported chain ID')
+    throw new CowError('Unsupported chain ID')
   }
 
   private static _etherCache: { [chainId: number]: GpEther } = {}

@@ -1,4 +1,4 @@
-export class SdkError extends Error {
+export class CowError extends Error {
   error_code?: string
 
   constructor(message: string, error_code?: string) {

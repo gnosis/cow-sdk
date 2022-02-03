@@ -1,5 +1,5 @@
 import log from 'loglevel'
-import { SdkError } from '../../utils/common'
+import { CowError } from '../../utils/common'
 
 type ApiActionType = 'get' | 'create' | 'delete'
 
@@ -77,7 +77,7 @@ function _mapActionToErrorDetail(action?: ApiActionType) {
   }
 }
 
-export default class OperatorError extends SdkError {
+export default class OperatorError extends CowError {
   name = 'OperatorError'
   description: ApiErrorObject['description']
 

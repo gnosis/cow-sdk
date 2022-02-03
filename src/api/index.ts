@@ -25,7 +25,7 @@ import {
   ProfileData,
   TradeMetaData,
 } from './types'
-import { SdkError } from '../utils/common'
+import { CowError } from '../utils/common'
 
 function getGnosisProtocolUrl(isDev: boolean): Partial<Record<ChainId, string>> {
   if (isDev) {
@@ -134,7 +134,7 @@ export class CowApi<T extends ChainId> {
     if (!response.ok) {
       const errorResponse = await response.json()
       log.error(errorResponse)
-      throw new SdkError(errorResponse?.description)
+      throw new CowError(errorResponse?.description)
     } else {
       return response.json()
     }
@@ -152,7 +152,7 @@ export class CowApi<T extends ChainId> {
     if (!response.ok) {
       const errorResponse = await response.json()
       log.error(errorResponse)
-      throw new SdkError(errorResponse?.description)
+      throw new CowError(errorResponse?.description)
     } else {
       return response.json()
     }
@@ -167,13 +167,13 @@ export class CowApi<T extends ChainId> {
 
       if (!response.ok) {
         const errorResponse = await response.json()
-        throw new SdkError(errorResponse)
+        throw new CowError(errorResponse)
       } else {
         return response.json()
       }
     } catch (error) {
       log.error('Error getting trades:', error)
-      throw new SdkError('Error getting trades: ' + error)
+      throw new CowError('Error getting trades: ' + error)
     }
   }
 
@@ -252,7 +252,7 @@ export class CowApi<T extends ChainId> {
     if (!response.ok) {
       // Raise an exception
       const errorMessage = await OperatorError.getErrorFromStatusCode(response, 'delete')
-      throw new SdkError(errorMessage)
+      throw new CowError(errorMessage)
     }
 
     log.debug(`[api:${this.API_NAME}] Cancelled order`, cancellation.orderUid, this.chainId)
@@ -273,7 +273,7 @@ export class CowApi<T extends ChainId> {
     if (!response.ok) {
       // Raise an exception
       const errorMessage = await OperatorError.getErrorFromStatusCode(response, 'create')
-      throw new SdkError(errorMessage)
+      throw new CowError(errorMessage)
     }
 
     const uid = (await response.json()) as string
@@ -321,7 +321,7 @@ export class CowApi<T extends ChainId> {
     const baseUrl = this.API_BASE_URL[this.chainId]
 
     if (!baseUrl) {
-      throw new SdkError(`Unsupported Network. The ${this.API_NAME} API is not deployed in the Network ` + this.chainId)
+      throw new CowError(`Unsupported Network. The ${this.API_NAME} API is not deployed in the Network ` + this.chainId)
     } else {
       return baseUrl + '/v1'
     }
@@ -331,7 +331,7 @@ export class CowApi<T extends ChainId> {
     const baseUrl = this.PROFILE_API_BASE_URL[this.chainId]
 
     if (!baseUrl) {
-      throw new SdkError(`Unsupported Network. The ${this.API_NAME} API is not deployed in the Network ` + this.chainId)
+      throw new CowError(`Unsupported Network. The ${this.API_NAME} API is not deployed in the Network ` + this.chainId)
     } else {
       return baseUrl + '/v1'
     }
