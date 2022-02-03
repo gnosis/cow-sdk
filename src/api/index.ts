@@ -35,14 +35,14 @@ function getGnosisProtocolUrl(isDev: boolean): Partial<Record<ChainId, string>> 
     return {
       [ChainId.MAINNET]: 'https://barn.api.cow.fi/mainnet/api',
       [ChainId.RINKEBY]: 'https://barn.api.cow.fi/rinkeby/api',
-      [ChainId.XDAI]: 'https://barn.api.cow.fi/xdai/api',
+      [ChainId.GNOSIS_CHAIN]: 'https://barn.api.cow.fi/xdai/api',
     }
   }
 
   return {
     [ChainId.MAINNET]: 'https://api.cow.fi/mainnet/api',
     [ChainId.RINKEBY]: 'https://api.cow.fi/rinkeby/api',
-    [ChainId.XDAI]: 'https://api.cow.fi/xdai/api',
+    [ChainId.GNOSIS_CHAIN]: 'https://api.cow.fi/xdai/api',
   }
 }
 
@@ -64,7 +64,7 @@ function getPriceStrategyUrl(): Record<ChainId, string> {
   return {
     [ChainId.MAINNET]: STRATEGY_URL_BASE + '/strategy-1.json',
     [ChainId.RINKEBY]: STRATEGY_URL_BASE + '/strategy-4.json',
-    [ChainId.XDAI]: STRATEGY_URL_BASE + '/strategy-100.json',
+    [ChainId.GNOSIS_CHAIN]: STRATEGY_URL_BASE + '/strategy-100.json',
   }
 }
 

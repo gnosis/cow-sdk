@@ -5,7 +5,7 @@ import { WXDAI, XDAI_NAME, XDAI_SYMBOL } from './xdai'
 
 export const WETH9_EXTENDED: { [chainId: number]: Token } = {
   ...WETH9,
-  [SupportedChainId.XDAI]: WXDAI,
+  [SupportedChainId.GNOSIS_CHAIN]: WXDAI,
 }
 
 export class GpEther extends NativeCurrency {
@@ -24,7 +24,7 @@ export class GpEther extends NativeCurrency {
     if (this._etherCache[chainId]) return this._etherCache[chainId]
 
     switch (chainId) {
-      case SupportedChainId.XDAI:
+      case SupportedChainId.GNOSIS_CHAIN:
         this._etherCache[chainId] = new GpEther(chainId, 18, XDAI_SYMBOL, XDAI_NAME)
         break
       default:

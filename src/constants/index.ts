@@ -12,7 +12,7 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 export const GAS_FEE_ENDPOINTS = {
   [ChainId.MAINNET]: 'https://safe-relay.gnosis.io/api/v1/gas-station/',
   [ChainId.RINKEBY]: 'https://safe-relay.rinkeby.gnosis.io/api/v1/gas-station/',
-  [ChainId.XDAI]: 'https://safe-relay.gnosis.io/api/v1/gas-station/',
+  [ChainId.GNOSIS_CHAIN]: 'https://safe-relay.gnosis.io/api/v1/gas-station/',
 }
 
 export const DEFAULT_APP_DATA_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'
