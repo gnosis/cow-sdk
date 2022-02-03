@@ -10,12 +10,12 @@ export class CowSdk<T extends ChainId> {
   static version = SDK_VERSION
   chainId: T
   context: Context
-  api: CowApi<T>
+  cowApi: CowApi<T>
 
   constructor(chainId: T, cowContext: CowContext) {
     this.chainId = chainId
     this.context = new Context(cowContext)
-    this.api = new CowApi(chainId, this.context)
+    this.cowApi = new CowApi(chainId, this.context)
   }
 
   validateAppDataDocument = validateAppDataDocument
