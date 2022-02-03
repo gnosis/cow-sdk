@@ -14,11 +14,8 @@ import QuoteError, {
 import { toErc20Address } from '../utils/tokens'
 import { FeeQuoteParams, PriceInformation, PriceQuoteParams, SimpleGetQuoteResponse } from '../utils/price'
 
-import { DEFAULT_NETWORK_FOR_LISTS } from '../constants/lists'
-import { GAS_FEE_ENDPOINTS } from '../constants'
 import { ZERO_ADDRESS } from '../constants'
 import {
-  GasFeeEndpointResponse,
   GetOrdersParams,
   GetTradesParams,
   OrderCancellationParams,
@@ -98,11 +95,6 @@ async function _handleQuoteResponse<T = any, P extends QuoteQuery = QuoteQuery>(
   } else {
     return response.json()
   }
-}
-
-export async function getGasPrices(chainId: ChainId = DEFAULT_NETWORK_FOR_LISTS): Promise<GasFeeEndpointResponse> {
-  const response = await fetch(GAS_FEE_ENDPOINTS[chainId])
-  return response.json()
 }
 
 export class CowApi<T extends ChainId> {

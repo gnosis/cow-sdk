@@ -87,12 +87,3 @@ export type PriceStrategy = {
   primary: GpPriceStrategy
   secondary: GpPriceStrategy
 }
-
-export interface GasFeeEndpointResponse {
-  lastUpdate: string
-  lowest: string
-  safeLow: string
-  standard: string
-  fast: string
-  fastest: string
-}
