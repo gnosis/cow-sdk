@@ -2,8 +2,8 @@ import log from 'loglevel'
 import fetch from 'cross-fetch'
 import { stringify } from 'qs'
 import { OrderKind, QuoteQuery } from '@gnosis.pm/gp-v2-contracts'
-import { SupportedChainId as ChainId } from '../../constants/chains'
-import { getSigningSchemeApiValue, OrderCreation } from '../../utils/sign'
+import { SupportedChainId as ChainId } from '/constants/chains'
+import { getSigningSchemeApiValue, OrderCreation } from '/utils/sign'
 import OperatorError, { ApiErrorCodeDetails, ApiErrorCodes, ApiErrorObject } from './errors/OperatorError'
 import QuoteError, {
   GpQuoteErrorCodes,
@@ -11,10 +11,10 @@ import QuoteError, {
   mapOperatorErrorToQuoteError,
   GpQuoteErrorDetails,
 } from './errors/QuoteError'
-import { toErc20Address } from '../../utils/tokens'
-import { FeeQuoteParams, PriceInformation, PriceQuoteParams, SimpleGetQuoteResponse } from '../../utils/price'
+import { toErc20Address } from '/utils/tokens'
+import { FeeQuoteParams, PriceInformation, PriceQuoteParams, SimpleGetQuoteResponse } from '/utils/price'
 
-import { ZERO_ADDRESS } from '../../constants'
+import { ZERO_ADDRESS } from '/constants'
 import {
   GetOrdersParams,
   GetTradesParams,
@@ -24,8 +24,8 @@ import {
   ProfileData,
   TradeMetaData,
 } from './types'
-import { CowError } from '../../utils/common'
-import { Context } from '../../utils/context'
+import { CowError } from '/utils/common'
+import { Context } from '/utils/context'
 
 function getGnosisProtocolUrl(isDev: boolean): Partial<Record<ChainId, string>> {
   if (isDev) {

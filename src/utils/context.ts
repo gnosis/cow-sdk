@@ -1,6 +1,6 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { CowError } from './common'
-import { DEFAULT_APP_DATA_HASH } from '../constants'
+import { DEFAULT_APP_DATA_HASH } from '/constants'
 
 export interface CowContext {
   appDataHash?: string

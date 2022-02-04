@@ -1,6 +1,6 @@
 import { GetQuoteResponse } from '@gnosis.pm/gp-v2-contracts'
-import { OrderMetaData } from '../api/cow/types'
-import { SupportedChainId as ChainId } from '../constants/chains'
+import { OrderMetaData } from '/api/cow/types'
+import { SupportedChainId as ChainId } from '/constants/chains'
 
 export interface QuoteParams {
   quoteParams: FeeQuoteParams

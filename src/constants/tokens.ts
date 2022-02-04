@@ -1,6 +1,6 @@
 import { Token, NativeCurrency, Currency, WETH9 } from '@uniswap/sdk-core'
-import { SupportedChainId } from '../constants/chains'
-import { CowError } from '../utils/common'
+import { SupportedChainId } from '/constants/chains'
+import { CowError } from '/utils/common'
 import { WXDAI, XDAI_NAME, XDAI_SYMBOL } from './xdai'
 
 export const WETH9_EXTENDED: { [chainId: number]: Token } = {
