@@ -21,23 +21,13 @@ export class CowSdk<T extends ChainId> {
   validateAppDataDocument = validateAppDataDocument
 
   signOrder(order: UnsignedOrder) {
-    try {
-      const signer = this.context.provider.getSigner()
-
-      return signOrder(order, this.chainId, signer)
-    } catch (error) {
-      log.error('There was an error signing the order', error)
-    }
+    const signer = this.context.provider.getSigner()
+    return signOrder(order, this.chainId, signer)
   }
 
   signOrderCancellation(orderId: string) {
-    try {
-      const signer = this.context.provider.getSigner()
-
-      return signOrderCancellation(orderId, this.chainId, signer)
-    } catch (error) {
-      log.error('There was an error signing the cancellation order', error)
-    }
+    const signer = this.context.provider.getSigner()
+    return signOrderCancellation(orderId, this.chainId, signer)
   }
 }
 
