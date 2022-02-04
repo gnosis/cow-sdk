@@ -23,7 +23,7 @@ import {
   OrderMetaData,
   ProfileData,
   TradeMetaData,
-} from './types'
+} from '/api/cow/types'
 import { CowError } from '/utils/common'
 import { Context } from '/utils/context'
 
