@@ -1,40 +1,16 @@
-import { Token, NativeCurrency, Currency, WETH9 } from '@uniswap/sdk-core'
-import { SupportedChainId } from '/constants/chains'
-import { CowError } from '/utils/common'
-import { WXDAI, XDAI_NAME, XDAI_SYMBOL } from './xdai'
+import { SupportedChainId as ChainId } from '/constants/chains'
+import { Token } from '/types'
 
-export const WETH9_EXTENDED: { [chainId: number]: Token } = {
-  ...WETH9,
-  [SupportedChainId.GNOSIS_CHAIN]: WXDAI,
+export const XDAI_SYMBOL = 'XDAI'
+
+export const WETH: Record<ChainId, Token> = {
+  [ChainId.MAINNET]: new Token('WETH', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'),
+  [ChainId.RINKEBY]: new Token('WETH', '0xc778417E063141139Fce010982780140Aa0cD5Ab'),
+  [ChainId.GNOSIS_CHAIN]: new Token('WXDAI', '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d'),
 }
 
-export class GpEther extends NativeCurrency {
-  constructor(chainId: number, decimals = 18, symbol = 'ETH', name = 'Ether') {
-    super(chainId, decimals, symbol, name)
-  }
-
-  public get wrapped(): Token {
-    if (this.chainId in WETH9_EXTENDED) return WETH9_EXTENDED[this.chainId]
-    throw new CowError('Unsupported chain ID')
-  }
-
-  private static _etherCache: { [chainId: number]: GpEther } = {}
-
-  public static onChain(chainId: number): GpEther {
-    if (this._etherCache[chainId]) return this._etherCache[chainId]
-
-    switch (chainId) {
-      case SupportedChainId.GNOSIS_CHAIN:
-        this._etherCache[chainId] = new GpEther(chainId, 18, XDAI_SYMBOL, XDAI_NAME)
-        break
-      default:
-        this._etherCache[chainId] = new GpEther(chainId)
-    }
-
-    return this._etherCache[chainId]
-  }
-
-  public equals(other: Currency): boolean {
-    return other.isNative && other.chainId === this.chainId
-  }
+export const NATIVE: Record<ChainId, string> = {
+  [ChainId.MAINNET]: 'ETH',
+  [ChainId.RINKEBY]: 'ETH',
+  [ChainId.GNOSIS_CHAIN]: XDAI_SYMBOL,
 }
