@@ -1,6 +1,5 @@
 import log from 'loglevel'
 import fetch from 'cross-fetch'
-import { stringify } from 'qs'
 import { OrderKind, QuoteQuery } from '@gnosis.pm/gp-v2-contracts'
 import { SupportedChainId as ChainId } from '/constants/chains'
 import { getSigningSchemeApiValue, OrderCreation } from '/utils/sign'
@@ -24,7 +23,7 @@ import {
   ProfileData,
   TradeMetaData,
 } from '/api/cow/types'
-import { CowError } from '/utils/common'
+import { CowError, objectToQueryString } from '/utils/common'
 import { Context } from '/utils/context'
 
 function getGnosisProtocolUrl(isDev: boolean): Partial<Record<ChainId, string>> {
@@ -130,10 +129,10 @@ export class CowApi<T extends ChainId> {
 
   async getTrades(params: GetTradesParams): Promise<TradeMetaData[]> {
     const { owner, limit, offset } = params
-    const qsParams = stringify({ owner, limit, offset })
+    const qsParams = objectToQueryString({ owner, limit, offset })
     log.debug('[util:operator] Get trades for', this.chainId, owner, { limit, offset })
     try {
-      const response = await this.get(`/trades?${qsParams}`)
+      const response = await this.get(`/trades${qsParams}`)
 
       if (!response.ok) {
         const errorResponse = await response.json()
@@ -149,7 +148,7 @@ export class CowApi<T extends ChainId> {
 
   async getOrders(params: GetOrdersParams): Promise<OrderMetaData[]> {
     const { owner, limit = 1000, offset = 0 } = params
-    const queryString = stringify({ limit, offset }, { addQueryPrefix: true })
+    const queryString = objectToQueryString({ limit, offset })
     log.debug(`[api:${this.API_NAME}] Get orders for `, this.chainId, owner, limit, offset)
 
     try {
