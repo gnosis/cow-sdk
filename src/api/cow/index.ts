@@ -201,7 +201,7 @@ export class CowApi<T extends ChainId> {
   }
 
   async getQuote(params: FeeQuoteParams): Promise<SimpleGetQuoteResponse> {
-    const quoteParams = this.mapNewToLegacyParams(params)
+    const quoteParams = this.mapNewToLegacyParams(params, this.chainId)
     const response = await this.post('/quote', quoteParams)
 
     return _handleQuoteResponse<SimpleGetQuoteResponse>(response)
@@ -227,14 +227,15 @@ export class CowApi<T extends ChainId> {
     log.debug(`[api:${this.API_NAME}] Cancelled order`, cancellation.orderUid, this.chainId)
   }
 
-  async sendOrder(params: { order: OrderCreation; owner: string }): Promise<OrderID> {
-    const { order, owner } = params
-    log.debug(`[api:${this.API_NAME}] Post signed order for network`, this.chainId, order)
+  async sendOrder(params: { order: Omit<OrderCreation, 'appData'>; owner: string }): Promise<OrderID> {
+    const fullOrder: OrderCreation = { ...params.order, appData: this.context.appDataHash }
+    const { owner } = params
+    log.debug(`[api:${this.API_NAME}] Post signed order for network`, this.chainId, fullOrder)
 
     // Call API
     const response = await this.post(`/orders`, {
-      ...order,
-      signingScheme: getSigningSchemeApiValue(order.signingScheme),
+      ...fullOrder,
+      signingScheme: getSigningSchemeApiValue(fullOrder.signingScheme),
       from: owner,
     })
 
@@ -256,8 +257,8 @@ export class CowApi<T extends ChainId> {
     return baseUrl + `/orders/${orderId}`
   }
 
-  private mapNewToLegacyParams(params: FeeQuoteParams): QuoteQuery {
-    const { amount, kind, userAddress, receiver, validTo, sellToken, buyToken, chainId } = params
+  private mapNewToLegacyParams(params: FeeQuoteParams, chainId: ChainId): QuoteQuery {
+    const { amount, kind, userAddress, receiver, validTo, sellToken, buyToken } = params
     const fallbackAddress = userAddress || ZERO_ADDRESS
 
     const baseParams = {

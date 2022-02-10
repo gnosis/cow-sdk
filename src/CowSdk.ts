@@ -1,4 +1,3 @@
-import log from 'loglevel'
 import { version as SDK_VERSION } from '../package.json'
 import { CowApi } from './api'
 import { SupportedChainId as ChainId } from '/constants/chains'
@@ -12,7 +11,7 @@ export class CowSdk<T extends ChainId> {
   context: Context
   cowApi: CowApi<T>
 
-  constructor(chainId: T, cowContext: CowContext) {
+  constructor(chainId: T, cowContext: CowContext = {}) {
     this.chainId = chainId
     this.context = new Context(cowContext)
     this.cowApi = new CowApi(chainId, this.context)
@@ -20,14 +19,12 @@ export class CowSdk<T extends ChainId> {
 
   validateAppDataDocument = validateAppDataDocument
 
-  signOrder(order: UnsignedOrder) {
-    const signer = this.context.provider.getSigner()
-    return signOrder(order, this.chainId, signer)
+  signOrder(order: Omit<UnsignedOrder, 'appData'>) {
+    return signOrder({ ...order, appData: this.context.appDataHash }, this.chainId, this.context.signer)
   }
 
   signOrderCancellation(orderId: string) {
-    const signer = this.context.provider.getSigner()
-    return signOrderCancellation(orderId, this.chainId, signer)
+    return signOrderCancellation(orderId, this.chainId, this.context.signer)
   }
 }
 

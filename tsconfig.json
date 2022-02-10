@@ -12,5 +12,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
   }
 }

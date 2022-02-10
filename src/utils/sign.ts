@@ -127,7 +127,7 @@ async function _signOrderCancellation(params: SingOrderCancellationParams): Prom
   return signOrderCancellationGp(domain, orderId, signer, getSigningSchemeLibValue(signingScheme))
 }
 
-type SigningResult = { signature: string; signingScheme: SigningScheme }
+export type SigningResult = { signature: string; signingScheme: SigningScheme }
 
 async function _signPayload(
   payload: any,

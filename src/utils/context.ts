@@ -1,11 +1,11 @@
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { Signer } from 'ethers'
 import { CowError } from './common'
 import { DEFAULT_APP_DATA_HASH } from '/constants'
 
 export interface CowContext {
   appDataHash?: string
   isDevEnvironment?: boolean
-  provider?: JsonRpcProvider
+  signer?: Signer
 }
 
 export const DefaultCowContext = { appDataHash: DEFAULT_APP_DATA_HASH, isDevEnvironment: false }
@@ -32,10 +32,11 @@ export class Context implements Required<CowContext> {
     return this.context.isDevEnvironment ?? DefaultCowContext.isDevEnvironment
   }
 
-  get provider(): JsonRpcProvider {
-    if (!this.context.provider) {
-      throw new CowError('No provider was instantiated')
+  get signer(): Signer {
+    if (this.context.signer) {
+      return this.context.signer
     }
-    return this.context.provider
+
+    throw new CowError('No signer was provided')
   }
 }
